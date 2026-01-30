@@ -25,7 +25,7 @@ function App() {
     `${import.meta.env.VITE_API_URL}/ai/get-review`,
     { code }
   );
-  setReview(response.data);
+  setReview(response.data.review); // change
 }
 
 
