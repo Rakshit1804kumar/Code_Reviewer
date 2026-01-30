@@ -100,7 +100,7 @@ ${code}
         return result.response.text();
 
     } catch (error) {
-        console.error("Gemini Service Error:", error.message);
+        console.error("Gemini Service Error:", error);
         throw new Error("AI generation failed");
     }
 }
