@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: "gemini-1.5-flash",
     systemInstruction: `
                 Here’s a solid system instruction for your AI code reviewer:
 
@@ -82,13 +82,28 @@ const model = genAI.getGenerativeModel({
 });
 
 
-async function generateContent(prompt) {
-    const result = await model.generateContent(prompt);
+async function generateContent(code) {
+    try {
+        const prompt = `
+Please review the following code and provide:
+- Issues
+- Improvements
+- Corrected version
 
-    console.log(result.response.text())
+\`\`\`
+${code}
+\`\`\`
+`;
 
-    return result.response.text();
+        const result = await model.generateContent(prompt);
 
+        return result.response.text();
+
+    } catch (error) {
+        console.error("Gemini Service Error:", error.message);
+        throw new Error("AI generation failed");
+    }
 }
+
 
 module.exports = generateContent 
