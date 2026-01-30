@@ -81,6 +81,16 @@ const model = genAI.getGenerativeModel({
     `
 });
 
+async function listModelsOnce() {
+  const models = await genAI.listModels();
+  console.log("AVAILABLE MODELS ↓↓↓");
+  models.models.forEach(m => {
+    console.log(m.name, m.supportedGenerationMethods);
+  });
+}
+
+// run once
+listModelsOnce();
 
 async function generateContent(code) {
     try {
